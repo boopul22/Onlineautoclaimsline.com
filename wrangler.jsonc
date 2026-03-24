@@ -1,0 +1,17 @@
+{
+    "name": "onlineautoclaimsline",
+    "compatibility_date": "2026-01-14",
+    "assets": {
+        "directory": "./dist"
+    },
+    "routes": [
+        {
+            "pattern": "onlineautoclaimsline.com",
+            "custom_domain": true
+        },
+        {
+            "pattern": "www.onlineautoclaimsline.com",
+            "custom_domain": true
+        }
+    ]
+}
