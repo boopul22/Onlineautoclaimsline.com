@@ -1,6 +1,8 @@
 {
     "name": "onlineautoclaimslinecom",
     "compatibility_date": "2026-01-14",
+    "workers_dev": false,
+    "preview_urls": false,
     "assets": {
         "directory": "./dist",
         "not_found_handling": "single-page-application"
@@ -8,11 +10,13 @@
     "routes": [
         {
             "pattern": "onlineautoclaimsline.com",
-            "custom_domain": true
+            "custom_domain": true,
+            "override_existing_dns_record": true
         },
         {
             "pattern": "www.onlineautoclaimsline.com",
-            "custom_domain": true
+            "custom_domain": true,
+            "override_existing_dns_record": true
         }
     ]
 }
