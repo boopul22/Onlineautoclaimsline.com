@@ -199,7 +199,7 @@ export default function Terms() {
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">11. Limitation of Liability</h2>
             <div className="bg-gray-100 border border-gray-200 rounded-lg p-5">
               <p className="leading-relaxed font-bold text-gray-900 uppercase text-sm">
-                TO THE FULLEST EXTENT PERMITTED BY LAW, AUTOCLAIMFILING.ONLINE'S AGGREGATE LIABILITY SHALL NOT EXCEED $100.00 USD. WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM YOUR USE OF THE SERVICES OR YOUR DEALINGS WITH THIRD-PARTY PARTNERS.
+                TO THE FULLEST EXTENT PERMITTED BY LAW, AUTOCLAIMFILING'S AGGREGATE LIABILITY SHALL NOT EXCEED $100.00 USD. WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM YOUR USE OF THE SERVICES OR YOUR DEALINGS WITH THIRD-PARTY PARTNERS.
               </p>
             </div>
           </section>
