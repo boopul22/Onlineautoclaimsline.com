@@ -110,7 +110,7 @@ export default function Terms() {
           <section id="introduction">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">1. Introduction</h2>
             <p className="leading-relaxed">
-              These Terms of Use ("Terms") constitute a legal contract between you and Autoclaimfiling.online ("Company," "we," "us," or "our"). These Terms govern your access to and use of our website, subdomains, and mobile features (the "Sites") and all marketing, administrative, and technology services provided therein (the "Services").
+              These Terms of Use ("Terms") constitute a legal contract between you and Autoclaimfiling ("Company," "we," "us," or "our"). These Terms govern your access to and use of our website, subdomains, and mobile features (the "Sites") and all marketing, administrative, and technology services provided therein (the "Services").
             </p>
             <p className="leading-relaxed mt-4">
               By using our Sites or Services, you represent that you are at least 18 years of age and agree to be bound by these Terms.
@@ -119,7 +119,7 @@ export default function Terms() {
 
           <section id="services">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">2. Marketing and Administrative Services</h2>
-            <p className="leading-relaxed mb-4">Autoclaimfiling.online is a marketing and technology platform.</p>
+            <p className="leading-relaxed mb-4">Autoclaimfiling is a marketing and technology platform.</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Not a Law Firm:</strong> We are not a law firm, lawyer referral service, or insurance provider. We do not provide legal advice or insurance adjusting services.</li>
               <li><strong>Compensation Disclosure:</strong> We are compensated by third-party marketing partners (law firms and intake specialists) for marketing and administrative services. We do not share in any legal fees or insurance settlements.</li>
@@ -137,7 +137,7 @@ export default function Terms() {
           <section id="tcpa">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">4. Consent to Electronic &amp; Telephone Communications (TCPA)</h2>
             <p className="leading-relaxed mb-4">
-              By providing your phone number, you provide express written consent to receive calls and text messages, including those delivered via automated technology (dialers), artificial voice, and pre-recorded messages, from Autoclaimfiling.online and its marketing partners.
+              By providing your phone number, you provide express written consent to receive calls and text messages, including those delivered via automated technology (dialers), artificial voice, and pre-recorded messages, from Autoclaimfiling and its marketing partners.
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Standard Rates:</strong> Message and data rates may apply.</li>
@@ -161,14 +161,14 @@ export default function Terms() {
           <section id="submitted">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">6. Submitted Materials</h2>
             <p className="leading-relaxed">
-              If you submit photos, stories, or data regarding an accident ("Submitted Material"), you grant Autoclaimfiling.online a royalty-free, perpetual, irrevocable, and sub-licensable right to use, copy, and distribute that material in any media. You warrant that you own the rights to any material you submit.
+              If you submit photos, stories, or data regarding an accident ("Submitted Material"), you grant Autoclaimfiling a royalty-free, perpetual, irrevocable, and sub-licensable right to use, copy, and distribute that material in any media. You warrant that you own the rights to any material you submit.
             </p>
           </section>
 
           <section id="intellectual">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">7. Intellectual Property</h2>
             <p className="leading-relaxed">
-              All content on the Sites — including text, graphics, logos, and "look and feel" — is the property of Autoclaimfiling.online or its licensors. You may not reproduce or distribute any content without our prior written consent.
+              All content on the Sites — including text, graphics, logos, and "look and feel" — is the property of Autoclaimfiling or its licensors. You may not reproduce or distribute any content without our prior written consent.
             </p>
           </section>
 
@@ -182,7 +182,7 @@ export default function Terms() {
           <section id="indemnification">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">9. Indemnification</h2>
             <p className="leading-relaxed">
-              You agree to defend and indemnify Autoclaimfiling.online, its officers, and affiliates from any claims, losses, or liabilities (including attorney's fees) arising from: (i) your use of the Services; (ii) your violation of these Terms; or (iii) any fraudulent information you provide.
+              You agree to defend and indemnify Autoclaimfiling, its officers, and affiliates from any claims, losses, or liabilities (including attorney's fees) arising from: (i) your use of the Services; (ii) your violation of these Terms; or (iii) any fraudulent information you provide.
             </p>
           </section>
 
@@ -249,7 +249,7 @@ export default function Terms() {
           <section id="contact">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">17. Contact Us</h2>
             <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
-              <p className="mb-2"><strong>Autoclaimfiling.online</strong></p>
+              <p className="mb-2"><strong>Autoclaimfiling</strong></p>
               <p className="mb-1">Email: <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a></p>
               <p>Address: C/O Burton Varley Ltd Suite 3, 2nd Floor, Didsbury House, 748-754 Wilmslow Road, Manchester, United Kingdom, M20 2DW</p>
             </div>

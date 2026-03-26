@@ -18,7 +18,7 @@ export default function WaHealth() {
         <div className="prose prose-lg max-w-none text-gray-600 space-y-10">
 
           <p className="leading-relaxed">
-            This policy applies specifically to Washington residents and describes how Autoclaimfiling.online ("we," "us," or "our") collects, uses, and shares "Consumer Health Data" as defined by the Washington My Health My Data Act (MHMDA).
+            This policy applies specifically to Washington residents and describes how Autoclaimfiling ("we," "us," or "our") collects, uses, and shares "Consumer Health Data" as defined by the Washington My Health My Data Act (MHMDA).
           </p>
 
           <section>

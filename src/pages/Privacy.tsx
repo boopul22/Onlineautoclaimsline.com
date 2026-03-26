@@ -97,7 +97,7 @@ export default function Privacy() {
           <section id="introduction">
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">1. INTRODUCTION AND SCOPE</h2>
             <p className="leading-relaxed">
-              Autoclaimfiling.online ("Company," "we," "our," or "us") is a marketing and technology platform. This Privacy Policy governs the personal information we collect when you: (a) visit our website (the "Site"); (b) utilize our claim-facilitation tools; or (c) contact us via our dedicated telephone lines or request to be contacted by our third-party marketing partners, including but not limited to, law firms, intake specialists, and legal advocates (collectively, "Marketing Partners").
+              Autoclaimfiling ("Company," "we," "our," or "us") is a marketing and technology platform. This Privacy Policy governs the personal information we collect when you: (a) visit our website (the "Site"); (b) utilize our claim-facilitation tools; or (c) contact us via our dedicated telephone lines or request to be contacted by our third-party marketing partners, including but not limited to, law firms, intake specialists, and legal advocates (collectively, "Marketing Partners").
             </p>
             <div className="bg-red-50 border border-red-200 rounded-lg p-5 mt-4">
               <p className="leading-relaxed font-medium text-red-800 text-sm">
@@ -110,7 +110,7 @@ export default function Privacy() {
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">2. NOT A LAW FIRM OR INSURANCE PROVIDER</h2>
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mb-4">
               <p className="leading-relaxed font-medium text-yellow-800 text-sm">
-                <strong>Important Disclosure:</strong> Autoclaimfiling.online is not a law firm, a lawyer referral service, or an insurance company. We do not provide legal advice, mediation, or insurance adjusting services.
+                <strong>Important Disclosure:</strong> Autoclaimfiling is not a law firm, a lawyer referral service, or an insurance company. We do not provide legal advice, mediation, or insurance adjusting services.
               </p>
             </div>
             <p className="leading-relaxed">
@@ -135,7 +135,7 @@ export default function Privacy() {
               Under the California Consumer Privacy Act (CCPA/CPRA) and the Colorado Privacy Act (CPA), residents have the right to opt-out of the "sale" or "sharing" of their personal information.
             </p>
             <p className="leading-relaxed mb-4">
-              <strong>Notice of Sale/Sharing:</strong> Autoclaimfiling.online is a marketing platform. We share the personal information you provide (including name, contact details, and accident information) with our Marketing Partners in exchange for an administrative or marketing fee. Under certain state laws, this transfer is classified as a "sale" or "sharing" of information.
+              <strong>Notice of Sale/Sharing:</strong> Autoclaimfiling is a marketing platform. We share the personal information you provide (including name, contact details, and accident information) with our Marketing Partners in exchange for an administrative or marketing fee. Under certain state laws, this transfer is classified as a "sale" or "sharing" of information.
             </p>
             <p className="leading-relaxed mb-4">
               <strong>Right to Opt-Out:</strong> You have the right to direct us not to sell or share your information. Please Note: If you exercise this right, we will be unable to process your claim inquiry or connect you with a Marketing Partner, as our service relies on this data transfer.
@@ -160,7 +160,7 @@ export default function Privacy() {
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">6. TCPA CONSENT &amp; TELEMARKETING DISCLOSURE</h2>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
               <p className="leading-relaxed text-blue-900 text-sm">
-                By providing your telephone number on our Site and/or initiating a call to our phone lines, you provide "prior express written consent" to be contacted by Autoclaimfiling.online and our designated Marketing Partners via live calls, artificial/synthesized voice, pre-recorded messages, and/or SMS text messages delivered via automated technology. You provide this consent even if your number is listed on any State or Federal Do-Not-Call list.
+                By providing your telephone number on our Site and/or initiating a call to our phone lines, you provide "prior express written consent" to be contacted by Autoclaimfiling and our designated Marketing Partners via live calls, artificial/synthesized voice, pre-recorded messages, and/or SMS text messages delivered via automated technology. You provide this consent even if your number is listed on any State or Federal Do-Not-Call list.
               </p>
             </div>
           </section>
@@ -190,7 +190,7 @@ export default function Privacy() {
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">10. CONTACT US</h2>
             <p className="leading-relaxed mb-4">To exercise your privacy rights or opt-out, please contact:</p>
             <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
-              <p className="mb-2"><strong>Autoclaimfiling.online</strong></p>
+              <p className="mb-2"><strong>Autoclaimfiling</strong></p>
               <p className="mb-1">Email: <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a></p>
               <p>Address: C/O Burton Varley Ltd Suite 3, 2nd Floor, Didsbury House, 748-754 Wilmslow Road, Manchester, United Kingdom, M20 2DW</p>
             </div>

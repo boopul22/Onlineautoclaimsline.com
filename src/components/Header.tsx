@@ -27,7 +27,7 @@ export default function Header() {
           <div className="w-9 h-9 bg-[#1A3C6E] rounded-lg flex items-center justify-center shadow-md">
             <span className="text-white font-bold text-lg">A</span>
           </div>
-          <span className="text-lg font-bold tracking-tight text-[#1A3C6E]">Autoclaimfiling<span className="text-[#FF6B35]">.</span>online</span>
+          <span className="text-lg font-bold tracking-tight text-[#1A3C6E]">Autoclaimfiling</span>
         </Link>
 
         {/* Desktop Nav */}

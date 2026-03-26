@@ -22,7 +22,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-[#1A3C6E] rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
                 <span className="text-white font-bold text-xl">A</span>
               </div>
-              <span className="font-bold text-xl text-white tracking-tight">Autoclaimfiling<span className="text-[#FF6B35]">.</span>online</span>
+              <span className="font-bold text-xl text-white tracking-tight">Autoclaimfiling</span>
             </Link>
             <p className="text-base text-gray-500 leading-relaxed max-w-xs">
               Fast, Fair, and Hassle-Free Accident Claim Support.
@@ -108,7 +108,7 @@ export default function Footer() {
           <div className="border-t border-b border-white/10 py-6 mt-10">
             <h5 className="text-white font-semibold mb-3 text-base">About Us</h5>
             <p className="text-sm font-medium text-gray-200 mb-1">
-              Autoclaimfiling.online is operated by Online Auto Claimsline LTD
+              Autoclaimfiling is operated by Online Auto Claimsline LTD
             </p>
             <p className="text-sm text-gray-500 mb-1">
               Company No. 17095931, Registered in England &amp; Wales
@@ -121,15 +121,15 @@ export default function Footer() {
           <div className="pb-6 border-b border-white/10">
             <h5 className="text-white font-semibold mb-3 text-base">Ad Disclosure</h5>
             <p className="text-xs text-gray-500 leading-relaxed mb-4">
-              ADVERTISEMENT: This website is a paid advertisement operated by Online Auto Claimsline LTD (Company No. 17095931). Autoclaimfiling.online is not a law firm, a lawyer referral service, or an insurance provider. We do not provide legal advice, medical advice, or insurance adjusting services. You may request free information about an attorney's background and experience. Individuals appearing on this website may be paid actors or spokespersons and not actual attorneys. Any depictions of accidents or consultations are dramatizations. Use of this site, our forms, or our phone lines does not create an attorney-client relationship.
+              ADVERTISEMENT: This website is a paid advertisement operated by Online Auto Claimsline LTD (Company No. 17095931). Autoclaimfiling is not a law firm, a lawyer referral service, or an insurance provider. We do not provide legal advice, medical advice, or insurance adjusting services. You may request free information about an attorney's background and experience. Individuals appearing on this website may be paid actors or spokespersons and not actual attorneys. Any depictions of accidents or consultations are dramatizations. Use of this site, our forms, or our phone lines does not create an attorney-client relationship.
             </p>
             <p className="text-xs text-gray-500 leading-relaxed">
-              FOR NORTH CAROLINA RESIDENTS: Autoclaimfiling.online is a legal advertising service. We do not offer legal services or representation. Legal services are available only through independent attorneys licensed to practice law in North Carolina. Contacting us does not create an attorney-client relationship.
+              FOR NORTH CAROLINA RESIDENTS: Autoclaimfiling is a legal advertising service. We do not offer legal services or representation. Legal services are available only through independent attorneys licensed to practice law in North Carolina. Contacting us does not create an attorney-client relationship.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-600">
-            <p>&copy; 2026 Autoclaimfiling.online. All rights reserved.</p>
+            <p>&copy; 2026 Autoclaimfiling. All rights reserved.</p>
             <div className="flex items-center gap-4">
               <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
               <span>|</span>

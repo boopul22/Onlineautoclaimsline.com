@@ -8,7 +8,7 @@ export default function FinalCta() {
           We're Here When You Need Us Most
         </h2>
         <p className="text-xl text-slate-400 mb-10 leading-relaxed">
-          Being in a car accident is stressful — getting help shouldn't be. At Autoclaimfiling.online, we make it easy to connect with our claims team so you can get the support and answers you need, fast.
+          Being in a car accident is stressful — getting help shouldn't be. At Autoclaimfiling, we make it easy to connect with our claims team so you can get the support and answers you need, fast.
         </p>
         <a
           href="#claim"

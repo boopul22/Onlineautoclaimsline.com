@@ -106,7 +106,7 @@ export default function ClaimForm() {
               _captcha: 'false',
               _honey: '',
               _replyto: formState.email,
-              _autoresponse: 'Thank you for contacting Autoclaimfiling.online! We have received your claim request and a specialist will reach out to you shortly.',
+              _autoresponse: 'Thank you for contacting Autoclaimfiling! We have received your claim request and a specialist will reach out to you shortly.',
               ...(formSubmitCc ? { _cc: formSubmitCc } : {}),
             })
           })
@@ -357,7 +357,7 @@ export default function ClaimForm() {
                   </div>
                   <div className="text-xs text-gray-500 leading-snug">
                     By clicking Submit, I agree to the <a href="/terms-and-conditions" className="underline hover:text-[#1A3C6E]">Terms of Service</a> and <a href="/privacy-policy" className="underline hover:text-[#1A3C6E]">Privacy Policy</a>.
-                    I provide my express written consent for Autoclaimfiling.online and its <a href="/partners-and-sponsors" className="underline hover:text-[#1A3C6E]">Marketing Partners</a> to contact me via live calls, automated dialing systems, and text messages at the number provided.
+                    I provide my express written consent for Autoclaimfiling and its <a href="/partners-and-sponsors" className="underline hover:text-[#1A3C6E]">Marketing Partners</a> to contact me via live calls, automated dialing systems, and text messages at the number provided.
                     I understand that my consent is not a condition of purchase and that calling or submitting this form does not create an attorney-client relationship.
                   </div>
                 </div>
@@ -376,7 +376,7 @@ export default function ClaimForm() {
                       />
                     </div>
                     <div className="text-xs text-gray-600 leading-snug">
-                      <strong>Sensitive Data Consent:</strong> I expressly consent to the collection and sharing of my sensitive personal information, including details of my injuries and medical status, with Autoclaimfiling.online's marketing partners as described in the <a href="/privacy-policy" className="underline hover:text-[#1A3C6E]">Privacy Policy</a>. I understand I can withdraw this consent at any time.
+                      <strong>Sensitive Data Consent:</strong> I expressly consent to the collection and sharing of my sensitive personal information, including details of my injuries and medical status, with Autoclaimfiling's marketing partners as described in the <a href="/privacy-policy" className="underline hover:text-[#1A3C6E]">Privacy Policy</a>. I understand I can withdraw this consent at any time.
                     </div>
                   </div>
                 )}
