@@ -70,7 +70,7 @@ export default function WaHealth() {
             </ul>
             <div className="bg-[#1A3C6E]/5 border border-[#1A3C6E]/20 rounded-lg p-5 mt-6">
               <p className="leading-relaxed text-sm">
-                <strong>How to Exercise Your Rights:</strong> Please submit your request to <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a> with the subject line "Washington Privacy Request."
+                <strong>How to Exercise Your Rights:</strong> Please submit your request to <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a> with the subject line "Washington Privacy Request."
               </p>
             </div>
           </section>
@@ -81,7 +81,7 @@ export default function WaHealth() {
               If we deny your request to exercise a right under the MHMDA, you have the right to appeal our decision within 30 days.
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>To appeal, please email <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a> with the subject line "Privacy Appeal."</li>
+              <li>To appeal, please email <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a> with the subject line "Privacy Appeal."</li>
               <li>We will respond to your appeal within 45 days. If your appeal is denied, you may contact the Washington State Attorney General at <a href="https://www.atg.wa.gov" target="_blank" rel="noopener noreferrer" className="text-[#1A3C6E] hover:underline">www.atg.wa.gov</a>.</li>
             </ul>
           </section>

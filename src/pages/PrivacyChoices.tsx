@@ -44,7 +44,7 @@ export default function PrivacyChoices() {
         timestamp: new Date().toISOString()
       };
 
-      const emailResponse = await fetch('https://formsubmit.co/ajax/help@autoclaimfiling.online', {
+      const emailResponse = await fetch('https://formsubmit.co/ajax/help@onlineautoclaimsline.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,13 +268,13 @@ export default function PrivacyChoices() {
           <section>
             <h2 className="text-xl font-bold text-[#1A3C6E] mb-4">4. OTHER CONTACT METHODS</h2>
             <p className="mb-2">If you have difficulty using the form, you may also submit your request via:</p>
-            <p><strong>Email:</strong> <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a></p>
+            <p><strong>Email:</strong> <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a></p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-[#1A3C6E] mb-4">5. AUTHORIZED AGENTS</h2>
             <p>
-              If you are submitting this request on behalf of another person, you must provide written proof of your authority (such as a power of attorney) to <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a> before we can process the request.
+              If you are submitting this request on behalf of another person, you must provide written proof of your authority (such as a power of attorney) to <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a> before we can process the request.
             </p>
           </section>
         </div>

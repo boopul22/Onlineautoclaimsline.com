@@ -142,7 +142,7 @@ export default function Privacy() {
             </p>
             <div className="bg-[#1A3C6E]/5 border border-[#1A3C6E]/20 rounded-lg p-5">
               <p className="leading-relaxed text-sm">
-                <strong>How to Opt-Out:</strong> To exercise this right, please visit our <Link to="/your-privacy-choices" className="text-[#1A3C6E] hover:underline">Your Privacy Choices</Link> page or email us at <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a> with the subject line "Opt-Out Request."
+                <strong>How to Opt-Out:</strong> To exercise this right, please visit our <Link to="/your-privacy-choices" className="text-[#1A3C6E] hover:underline">Your Privacy Choices</Link> page or email us at <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a> with the subject line "Opt-Out Request."
               </p>
             </div>
           </section>
@@ -191,7 +191,7 @@ export default function Privacy() {
             <p className="leading-relaxed mb-4">To exercise your privacy rights or opt-out, please contact:</p>
             <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
               <p className="mb-2"><strong>Autoclaimfiling</strong></p>
-              <p className="mb-1">Email: <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a></p>
+              <p className="mb-1">Email: <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a></p>
               <p>Address: C/O Burton Varley Ltd Suite 3, 2nd Floor, Didsbury House, 748-754 Wilmslow Road, Manchester, United Kingdom, M20 2DW</p>
             </div>
           </section>

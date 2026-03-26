@@ -86,7 +86,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-gray-500 mb-1">Email</span>
-                  <a href="mailto:help@autoclaimfiling.online" className="text-white font-medium hover:text-[#FF6B35] transition-colors break-all">help@autoclaimfiling.online</a>
+                  <a href="mailto:help@onlineautoclaimsline.com" className="text-white font-medium hover:text-[#FF6B35] transition-colors break-all">help@onlineautoclaimsline.com</a>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">

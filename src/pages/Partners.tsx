@@ -58,7 +58,7 @@ export default function Partners() {
           <section>
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">Become a Partner</h2>
             <p className="leading-relaxed">
-              If you are a licensed legal professional specializing in road traffic accidents and personal injury and are interested in joining our network, please reach out to our legal partnership team at <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline font-medium">help@autoclaimfiling.online</a>.
+              If you are a licensed legal professional specializing in road traffic accidents and personal injury and are interested in joining our network, please reach out to our legal partnership team at <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline font-medium">help@onlineautoclaimsline.com</a>.
             </p>
           </section>
 
@@ -66,7 +66,7 @@ export default function Partners() {
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">Contact Us</h2>
             <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
               <p className="mb-2"><strong>Autoclaimfiling</strong></p>
-              <p className="mb-1">Email: <a href="mailto:help@autoclaimfiling.online" className="text-[#1A3C6E] hover:underline">help@autoclaimfiling.online</a></p>
+              <p className="mb-1">Email: <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a></p>
               <p>Address: C/O Burton Varley Ltd Suite 3, 2nd Floor, Didsbury House, 748-754 Wilmslow Road, Manchester, United Kingdom, M20 2DW</p>
             </div>
           </section>
