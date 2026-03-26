@@ -52,7 +52,7 @@ export default function PrivacyChoices() {
         },
         body: JSON.stringify({
           ...payload,
-          _subject: 'PRIVACY OPT-OUT REQUEST - Autoclaimfiling',
+          _subject: 'PRIVACY OPT-OUT REQUEST - Online Auto Claimsline',
           _template: 'table'
         })
       });
@@ -123,7 +123,7 @@ export default function PrivacyChoices() {
           <section>
             <h2 className="text-xl font-bold text-[#1A3C6E] mb-4">1. NOTICE OF DATA PRACTICES</h2>
             <p className="mb-4">
-              Autoclaimfiling is a marketing and technology platform. To provide our services, we "sell" or "share" your information (including identifiers and accident details) with our Marketing Partners (law firms and intake specialists). Because the information you provide often includes details about your physical injuries, it is classified as Sensitive Personal Information.
+              Online Auto Claimsline is a marketing and technology platform. To provide our services, we "sell" or "share" your information (including identifiers and accident details) with our Marketing Partners (law firms and intake specialists). Because the information you provide often includes details about your physical injuries, it is classified as Sensitive Personal Information.
             </p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-5">
               <p className="text-yellow-800 font-medium text-sm">

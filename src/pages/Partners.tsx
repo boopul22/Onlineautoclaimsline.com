@@ -18,7 +18,7 @@ export default function Partners() {
 
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
             <p className="leading-relaxed text-yellow-800 text-sm">
-              Autoclaimfiling is a legal advertising service that connects consumers with independent attorneys. Autoclaimfiling is not a law firm, does not provide legal advice, and does not endorse or recommend any attorney. No attorney-client relationship is formed by using this website or its services. Past results do not guarantee future outcomes. These attorneys participate in the Autoclaimfiling advertising program and have paid for promotional placement on this site. Selection of an attorney is solely at the consumer's discretion.
+              Online Auto Claimsline is a legal advertising service that connects consumers with independent attorneys. Online Auto Claimsline is not a law firm, does not provide legal advice, and does not endorse or recommend any attorney. No attorney-client relationship is formed by using this website or its services. Past results do not guarantee future outcomes. These attorneys participate in the Online Auto Claimsline advertising program and have paid for promotional placement on this site. Selection of an attorney is solely at the consumer's discretion.
             </p>
           </div>
 
@@ -50,7 +50,7 @@ export default function Partners() {
           <section>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-5">
               <p className="text-blue-900 text-sm leading-relaxed">
-                <strong>Note:</strong> Autoclaimfiling does not determine which attorney will handle a specific case. You have the right to choose any attorney, including those not affiliated with this program.
+                <strong>Note:</strong> Online Auto Claimsline does not determine which attorney will handle a specific case. You have the right to choose any attorney, including those not affiliated with this program.
               </p>
             </div>
           </section>
@@ -65,7 +65,7 @@ export default function Partners() {
           <section>
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-4">Contact Us</h2>
             <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
-              <p className="mb-2"><strong>Autoclaimfiling</strong></p>
+              <p className="mb-2"><strong>Online Auto Claimsline</strong></p>
               <p className="mb-1">Email: <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline">help@onlineautoclaimsline.com</a></p>
               <p>Address: C/O Burton Varley Ltd Suite 3, 2nd Floor, Didsbury House, 748-754 Wilmslow Road, Manchester, United Kingdom, M20 2DW</p>
             </div>
