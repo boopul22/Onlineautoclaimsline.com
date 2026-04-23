@@ -37,8 +37,8 @@ export default function MidCta() {
               <p className="font-bold flex items-center gap-2 text-sm text-slate-300 uppercase tracking-wide">
                 Help Desk 24/7
               </p>
-              <a href="tel:8886263214" className="text-white font-mono text-xl font-bold hover:text-[#FF6B35] transition-colors">
-                888 626 3214
+              <a href="tel:8889870834" className="text-white font-mono text-xl font-bold hover:text-[#FF6B35] transition-colors">
+                888 987 0834
               </a>
             </div>
           </div>

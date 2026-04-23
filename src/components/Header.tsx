@@ -45,9 +45,9 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <a href="tel:8886263214" className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#1A3C6E] transition-colors">
+          <a href="tel:8889870834" className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#1A3C6E] transition-colors">
             <Phone className="w-4 h-4 text-[#1A3C6E]" />
-            888 626 3214
+            888 987 0834
           </a>
           <Link
             to="/#claim"
@@ -80,9 +80,9 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <a href="tel:8886263214" className="flex items-center gap-2 text-base font-medium text-[#1A3C6E] py-2">
+          <a href="tel:8889870834" className="flex items-center gap-2 text-base font-medium text-[#1A3C6E] py-2">
             <Phone className="w-5 h-5" />
-            Call: 888 626 3214
+            Call: 888 987 0834
           </a>
           <Link
             to="/#claim"

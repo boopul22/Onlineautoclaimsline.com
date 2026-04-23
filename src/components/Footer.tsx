@@ -77,7 +77,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-gray-500 mb-1">Phone</span>
-                  <a href="tel:8886263214" className="text-white font-bold text-lg hover:text-[#FF6B35] transition-colors">888 626 3214</a>
+                  <a href="tel:8889870834" className="text-white font-bold text-lg hover:text-[#FF6B35] transition-colors">888 987 0834</a>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">

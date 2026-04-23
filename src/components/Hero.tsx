@@ -23,9 +23,9 @@ export default function Hero() {
               <a href="#claim" className="inline-flex justify-center items-center gap-2 bg-[#1A3C6E] text-white px-6 py-3.5 rounded-full text-base font-medium hover:bg-slate-800 transition-all shadow-md shadow-[#1A3C6E]/10">
                 Begin Your Free Claim
               </a>
-              <a href="tel:8886263214" className="inline-flex justify-center items-center gap-2 bg-white border border-slate-200 text-slate-700 px-6 py-3.5 rounded-full text-base font-medium hover:bg-slate-50 transition-all shadow-sm">
+              <a href="tel:8889870834" className="inline-flex justify-center items-center gap-2 bg-white border border-slate-200 text-slate-700 px-6 py-3.5 rounded-full text-base font-medium hover:bg-slate-50 transition-all shadow-sm">
                 <Phone className="w-5 h-5 text-[#1A3C6E]" />
-                888 626 3214
+                888 987 0834
               </a>
             </div>
 
@@ -37,7 +37,7 @@ export default function Hero() {
             </div>
 
             <p className="text-sm text-slate-500 font-medium">
-              Need Immediate Help? Call <a href="tel:8886263214" className="text-[#1A3C6E] hover:underline font-semibold">888 626 3214</a>
+              Need Immediate Help? Call <a href="tel:8889870834" className="text-[#1A3C6E] hover:underline font-semibold">888 987 0834</a>
             </p>
           </div>
 
