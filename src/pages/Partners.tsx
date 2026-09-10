@@ -25,26 +25,8 @@ export default function Partners() {
           <section>
             <h2 className="text-xl md:text-2xl font-bold text-[#1A3C6E] mb-6">PARTICIPATING LEGAL SPONSORS</h2>
             <p className="mb-6 leading-relaxed">
-              The following attorneys and law firms are current participants in our joint advertising program. You have the right to request an attorney by name or choose an attorney not affiliated with this program.
+              Our joint advertising program includes licensed attorneys and law firms. You have the right to request an attorney by name or choose an attorney not affiliated with this program. For current participant information, please contact us at <a href="mailto:help@onlineautoclaimsline.com" className="text-[#1A3C6E] hover:underline font-medium">help@onlineautoclaimsline.com</a>.
             </p>
-
-            <div className="space-y-6">
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-[#1A3C6E] mb-3">Morgan &amp; Morgan, P.A.</h3>
-                <ul className="space-y-2 text-gray-600">
-                  <li><strong>Principal Office:</strong> Orlando, Florida</li>
-                  <li><strong>Jurisdictions:</strong> Licensed to practice in FL, GA, PA, AZ, and other states</li>
-                </ul>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-[#1A3C6E] mb-3">Injury Law Center</h3>
-                <ul className="space-y-2 text-gray-600">
-                  <li><strong>Principal Office:</strong> Los Angeles, California</li>
-                  <li><strong>Jurisdictions:</strong> Licensed to practice in CA, TX, NV</li>
-                </ul>
-              </div>
-            </div>
           </section>
 
           <section>
