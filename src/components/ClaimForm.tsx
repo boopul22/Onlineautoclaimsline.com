@@ -1,7 +1,30 @@
 import React, { useState } from 'react';
 import { ArrowRight, MessageSquare, User, Phone, Mail, ShieldCheck, Clock, CheckCircle, AlertCircle, Loader2, MapPin, Lock, Users } from 'lucide-react';
 
-export default function ClaimForm() {
+interface ClaimFormProps {
+  /** Worker API endpoint. Defaults to /api/claim (auto). Commercial page uses /api/commercial-claim. */
+  endpoint?: string;
+  /** Tag sent as `source` so inbox/Worker can tell traffic apart. */
+  source?: string;
+  /** Optional heading overrides for variant pages. */
+  title?: React.ReactNode;
+  subtitle?: string;
+  submitLabel?: string;
+  /** Section anchor id. Defaults to "claim". */
+  sectionId?: string;
+  /** Legacy FormSubmit fallback for this variant (used only if Worker API fails). */
+  fallbackFormSubmitUrl?: string;
+}
+
+export default function ClaimForm({
+  endpoint = '/api/claim',
+  source = 'homepage-auto',
+  title,
+  subtitle,
+  submitLabel = 'Submit For Free Review',
+  sectionId = 'claim',
+  fallbackFormSubmitUrl,
+}: ClaimFormProps = {}) {
   const [formState, setFormState] = useState({
     name: '',
     phone: '',
@@ -57,6 +80,7 @@ export default function ClaimForm() {
       const dataObj = {
         ...formState,
         timestamp: new Date().toISOString(),
+        source,
         consent_group: currentGroup,
         tcpa_consent: consentState.mainConsent ? 'Yes' : 'No',
         sensitive_data_consent: consentState.sensitiveDataConsent ? 'Yes' : 'No',
@@ -65,61 +89,90 @@ export default function ClaimForm() {
         ip_address: clientIp
       };
 
-      const sheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
-      const formSubmitUrl = import.meta.env.VITE_FORMSUBMIT_URL;
-      const formSubmitCc = import.meta.env.VITE_FORMSUBMIT_CC;
-
-      const submissions: Promise<Response>[] = [];
-
-      if (sheetUrl) {
-        submissions.push(
-          fetch(sheetUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(dataObj)
-          })
-        );
+      // 1) Primary: Cloudflare Worker email API (routes to correct inbox)
+      let workerOk = false;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dataObj)
+        });
+        if (res.ok) {
+          const json = await res.json().catch(() => ({ ok: true }));
+          workerOk = (json as { ok?: boolean }).ok !== false;
+        }
+      } catch {
+        workerOk = false;
       }
 
-      if (formSubmitUrl) {
-        submissions.push(
-          fetch(formSubmitUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              name: formState.name,
-              phone: formState.phone,
-              email: formState.email,
-              state: formState.state,
-              message: formState.message,
-              consent_group: currentGroup,
-              tcpa_consent: consentState.mainConsent ? 'Yes' : 'No',
-              sensitive_data_consent: consentState.sensitiveDataConsent ? 'Yes' : 'No',
-              wa_health_consent: consentState.waHealthConsent ? 'Yes' : 'No',
-              ip_address: clientIp,
-              _subject: `New Claim Request - ${formState.name} (${formState.state})`,
-              _template: 'table',
-              _captcha: 'false',
-              _honey: '',
-              _replyto: formState.email,
-              _autoresponse: 'Thank you for contacting Online Auto Claimsline! We have received your claim request and a specialist will reach out to you shortly.',
-              ...(formSubmitCc ? { _cc: formSubmitCc } : {}),
+      let anySuccess = workerOk;
+
+      // 2) Fallback (only if Worker failed): legacy Google Sheet + FormSubmit
+      if (!workerOk) {
+        const sheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
+        const formSubmitUrl =
+          fallbackFormSubmitUrl ||
+          import.meta.env.VITE_FORMSUBMIT_URL ||
+          (endpoint.includes('commercial')
+            ? 'https://formsubmit.co/ajax/admin@onlineautoclaimsline.com'
+            : undefined);
+        const formSubmitCc = import.meta.env.VITE_FORMSUBMIT_CC;
+
+        const submissions: Promise<Response>[] = [];
+
+        if (sheetUrl) {
+          submissions.push(
+            fetch(sheetUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(dataObj)
             })
-          })
-        );
+          );
+        }
+
+        if (formSubmitUrl) {
+          submissions.push(
+            fetch(formSubmitUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                name: formState.name,
+                phone: formState.phone,
+                email: formState.email,
+                state: formState.state,
+                message: formState.message,
+                source,
+                consent_group: currentGroup,
+                tcpa_consent: consentState.mainConsent ? 'Yes' : 'No',
+                sensitive_data_consent: consentState.sensitiveDataConsent ? 'Yes' : 'No',
+                wa_health_consent: consentState.waHealthConsent ? 'Yes' : 'No',
+                ip_address: clientIp,
+                _subject: `New Claim Request [${source}] - ${formState.name} (${formState.state})`,
+                _template: 'table',
+                _captcha: 'false',
+                _honey: '',
+                _replyto: formState.email,
+                _autoresponse: 'Thank you for contacting Online Auto Claimsline! We have received your claim request and a specialist will reach out to you shortly.',
+                ...(formSubmitCc ? { _cc: formSubmitCc } : {}),
+              })
+            })
+          );
+        }
+
+        if (submissions.length > 0) {
+          const results = await Promise.allSettled(submissions);
+          anySuccess = results.some(r => {
+            if (r.status === 'rejected') return false;
+            return r.value.type === 'opaque' || r.value.ok;
+          });
+        } else if (!workerOk) {
+          throw new Error('No submission endpoints configured');
+        }
       }
-
-      if (submissions.length === 0) throw new Error('No submission endpoints configured');
-
-      const results = await Promise.allSettled(submissions);
-      const anySuccess = results.some(r => {
-        if (r.status === 'rejected') return false;
-        return r.value.type === 'opaque' || r.value.ok;
-      });
 
       if (anySuccess) {
         setSubmitStatus('success');
@@ -165,7 +218,7 @@ export default function ClaimForm() {
   ];
 
   return (
-    <section id="claim" className="relative bg-[#1A3C6E] overflow-hidden">
+    <section id={sectionId} className="relative bg-[#1A3C6E] overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#4b5563 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
@@ -228,8 +281,8 @@ export default function ClaimForm() {
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#1A3C6E] to-[#FF6B35] rounded-t-2xl"></div>
 
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-[#1A3C6E] mb-2">Get Your Free Evaluation</h3>
-              <p className="text-gray-500 text-sm">Fill out the form below to speak with a specialist.</p>
+              <h3 className="text-2xl font-bold text-[#1A3C6E] mb-2">{title || 'Get Your Free Evaluation'}</h3>
+              <p className="text-gray-500 text-sm">{subtitle || 'Fill out the form below to speak with a specialist.'}</p>
             </div>
 
             {/* Success Message */}
@@ -415,7 +468,7 @@ export default function ClaimForm() {
                   </>
                 ) : (
                   <>
-                    Submit For Free Review
+                    {submitLabel}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </>
                 )}

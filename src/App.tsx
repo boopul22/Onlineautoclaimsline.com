@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileStickyCta from './components/MobileStickyCta';
 import Home from './pages/Home';
+import CommercialInsurance from './pages/CommercialInsurance';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import PrivacyChoices from './pages/PrivacyChoices';
@@ -18,6 +19,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/commercial-insurance" element={<CommercialInsurance />} />
         <Route path="/terms-and-conditions" element={<Terms />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/your-privacy-choices" element={<PrivacyChoices />} />

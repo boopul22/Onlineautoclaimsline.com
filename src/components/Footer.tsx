@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram, ArrowRight, ChevronUp } from 'lucide-react';
 
 export default function Footer() {
+  const location = useLocation();
+  const isCommercial = location.pathname.startsWith('/commercial-insurance');
+  const phoneTel = isCommercial ? 'tel:8882370877' : 'tel:8889870834';
+  const phoneDisplay = isCommercial ? '888 237 0877' : '888 987 0834';
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -52,6 +56,12 @@ export default function Footer() {
                   File a Claim
                 </Link>
               </li>
+              <li>
+                <Link to="/commercial-insurance" className="flex items-center hover:text-white transition-colors group">
+                  <ArrowRight size={14} className="mr-2 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-[#FF6B35]" />
+                  Commercial Insurance
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -77,7 +87,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-gray-500 mb-1">Phone</span>
-                  <a href="tel:8889870834" className="text-white font-bold text-lg hover:text-[#FF6B35] transition-colors">888 987 0834</a>
+                  <a href={phoneTel} className="text-white font-bold text-lg hover:text-[#FF6B35] transition-colors">{phoneDisplay}</a>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">

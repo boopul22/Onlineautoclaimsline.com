@@ -1,8 +1,15 @@
 {
     "name": "onlineautoclaimslinecom",
+    "main": "worker/index.ts",
     "compatibility_date": "2026-01-14",
+    "account_id": "60ab10fcb491fd2815da872dfa0dca07",
     "workers_dev": false,
     "preview_urls": false,
+    "send_email": [
+        {
+            "name": "EMAIL"
+        }
+    ],
     "assets": {
         "directory": "./dist",
         "not_found_handling": "single-page-application"

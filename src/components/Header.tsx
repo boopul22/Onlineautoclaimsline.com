@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Phone, Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -11,6 +11,11 @@ const navItems = [
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isCommercial = location.pathname.startsWith('/commercial-insurance');
+  const phoneTel = isCommercial ? 'tel:8882370877' : 'tel:8889870834';
+  const phoneDisplay = isCommercial ? '888 237 0877' : '888 987 0834';
+  const claimHref = isCommercial ? '/commercial-insurance#commercial-claim' : '/#claim';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -45,12 +50,12 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <a href="tel:8889870834" className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#1A3C6E] transition-colors">
+          <a href={phoneTel} className="flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-[#1A3C6E] transition-colors">
             <Phone className="w-4 h-4 text-[#1A3C6E]" />
-            888 987 0834
+            {phoneDisplay}
           </a>
           <Link
-            to="/#claim"
+            to={claimHref}
             className="bg-[#FF6B35] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#e65a2d] transition-colors shadow-sm shadow-[#FF6B35]/20"
           >
             File Your Claim Today
@@ -80,12 +85,12 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <a href="tel:8889870834" className="flex items-center gap-2 text-base font-medium text-[#1A3C6E] py-2">
+          <a href={phoneTel} className="flex items-center gap-2 text-base font-medium text-[#1A3C6E] py-2">
             <Phone className="w-5 h-5" />
-            Call: 888 987 0834
+            Call: {phoneDisplay}
           </a>
           <Link
-            to="/#claim"
+            to={claimHref}
             className="block w-full text-center bg-[#FF6B35] text-white px-5 py-3 rounded-xl text-base font-medium mt-2"
             onClick={() => setIsMobileMenuOpen(false)}
           >
