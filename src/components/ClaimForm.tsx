@@ -116,7 +116,11 @@ export default function ClaimForm({
           (endpoint.includes('commercial')
             ? 'https://formsubmit.co/ajax/admin@onlineautoclaimsline.com'
             : undefined);
-        const formSubmitCc = import.meta.env.VITE_FORMSUBMIT_CC;
+        // Homepage (non-commercial) fallback also CCs Immaculate so both inboxes get it,
+        // matching the Worker fan-out above. Commercial fallback already targets admin@.
+        const formSubmitCc =
+          import.meta.env.VITE_FORMSUBMIT_CC ||
+          (endpoint.includes('commercial') ? undefined : 'immaculatemedia2018@gmail.com');
 
         const submissions: Promise<Response>[] = [];
 

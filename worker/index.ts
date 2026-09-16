@@ -14,6 +14,7 @@ interface EmailBinding {
   send(message: {
     from: { email: string; name?: string };
     to: string | string[];
+    cc?: string | string[];
     subject: string;
     text?: string;
     html?: string;
@@ -39,7 +40,7 @@ function esc(v: unknown): string {
     .replace(/"/g, "&quot;");
 }
 
-async function handleClaim(request: Request, env: Env, opts: { to: string; subjectPrefix: string }) {
+async function handleClaim(request: Request, env: Env, opts: { to: string | string[]; subjectPrefix: string }) {
   let body: Record<string, unknown>;
   try {
     body = (await request.json()) as Record<string, unknown>;
@@ -130,7 +131,10 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/api/claim") {
       return handleClaim(request, env, {
-        to: AUTO_TO,
+        // Homepage form goes to BOTH: help@ (routes to Bipul) + Immaculate direct.
+        // Cloudflare Routing forward allows only one destination per rule,
+        // so fan-out happens here where multiple `to` recipients are supported.
+        to: [AUTO_TO, "immaculatemedia2018@gmail.com"],
         subjectPrefix: "New Claim Request",
       });
     }
