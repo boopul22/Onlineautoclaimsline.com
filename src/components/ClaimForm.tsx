@@ -12,8 +12,6 @@ interface ClaimFormProps {
   submitLabel?: string;
   /** Section anchor id. Defaults to "claim". */
   sectionId?: string;
-  /** Legacy FormSubmit fallback for this variant (used only if Worker API fails). */
-  fallbackFormSubmitUrl?: string;
 }
 
 export default function ClaimForm({
@@ -23,7 +21,6 @@ export default function ClaimForm({
   subtitle,
   submitLabel = 'Submit For Free Review',
   sectionId = 'claim',
-  fallbackFormSubmitUrl,
 }: ClaimFormProps = {}) {
   const [formState, setFormState] = useState({
     name: '',
@@ -68,14 +65,9 @@ export default function ClaimForm({
     setSubmitStatus('idle');
 
     try {
-      let clientIp = '';
-      try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        clientIp = ipData.ip || '';
-      } catch {
-        clientIp = 'Unavailable';
-      }
+      // No third-party IP lookup: the Worker fills IP from Cloudflare's
+      // cf-connecting-ip header when ip_address is empty.
+      const clientIp = '';
 
       const dataObj = {
         ...formState,
@@ -89,93 +81,18 @@ export default function ClaimForm({
         ip_address: clientIp
       };
 
-      // 1) Primary: Cloudflare Worker email API (routes to correct inbox)
-      let workerOk = false;
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dataObj)
-        });
-        if (res.ok) {
-          const json = await res.json().catch(() => ({ ok: true }));
-          workerOk = (json as { ok?: boolean }).ok !== false;
-        }
-      } catch {
-        workerOk = false;
-      }
-
-      let anySuccess = workerOk;
-
-      // 2) Fallback (only if Worker failed): legacy Google Sheet + FormSubmit
-      if (!workerOk) {
-        const sheetUrl = import.meta.env.VITE_GOOGLE_SHEET_URL;
-        const formSubmitUrl =
-          fallbackFormSubmitUrl ||
-          import.meta.env.VITE_FORMSUBMIT_URL ||
-          (endpoint.includes('commercial')
-            ? 'https://formsubmit.co/ajax/admin@onlineautoclaimsline.com'
-            : undefined);
-        // Homepage (non-commercial) fallback also CCs Immaculate so both inboxes get it,
-        // matching the Worker fan-out above. Commercial fallback already targets admin@.
-        const formSubmitCc =
-          import.meta.env.VITE_FORMSUBMIT_CC ||
-          (endpoint.includes('commercial') ? undefined : 'immaculatemedia2018@gmail.com');
-
-        const submissions: Promise<Response>[] = [];
-
-        if (sheetUrl) {
-          submissions.push(
-            fetch(sheetUrl, {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: { 'Content-Type': 'text/plain' },
-              body: JSON.stringify(dataObj)
-            })
-          );
-        }
-
-        if (formSubmitUrl) {
-          submissions.push(
-            fetch(formSubmitUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                name: formState.name,
-                phone: formState.phone,
-                email: formState.email,
-                state: formState.state,
-                message: formState.message,
-                source,
-                consent_group: currentGroup,
-                tcpa_consent: consentState.mainConsent ? 'Yes' : 'No',
-                sensitive_data_consent: consentState.sensitiveDataConsent ? 'Yes' : 'No',
-                wa_health_consent: consentState.waHealthConsent ? 'Yes' : 'No',
-                ip_address: clientIp,
-                _subject: `New Claim Request [${source}] - ${formState.name} (${formState.state})`,
-                _template: 'table',
-                _captcha: 'false',
-                _honey: '',
-                _replyto: formState.email,
-                _autoresponse: 'Thank you for contacting Online Auto Claimsline! We have received your claim request and a specialist will reach out to you shortly.',
-                ...(formSubmitCc ? { _cc: formSubmitCc } : {}),
-              })
-            })
-          );
-        }
-
-        if (submissions.length > 0) {
-          const results = await Promise.allSettled(submissions);
-          anySuccess = results.some(r => {
-            if (r.status === 'rejected') return false;
-            return r.value.type === 'opaque' || r.value.ok;
-          });
-        } else if (!workerOk) {
-          throw new Error('No submission endpoints configured');
-        }
+      // Cloudflare-only: POST to the Worker email API (Email Sending + Routing).
+      // No third-party form services. The Worker fans mail out to the right inbox:
+      // homepage -> help@ (+ Immaculate), commercial -> admin@ (-> Immaculate).
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataObj)
+      });
+      let anySuccess = false;
+      if (res.ok) {
+        const json = await res.json().catch(() => ({ ok: true }));
+        anySuccess = (json as { ok?: boolean }).ok !== false;
       }
 
       if (anySuccess) {

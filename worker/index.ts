@@ -139,6 +139,39 @@ export default {
       });
     }
 
+    if (request.method === "POST" && url.pathname === "/api/privacy-request") {
+      let body: Record<string, unknown>;
+      try {
+        body = (await request.json()) as Record<string, unknown>;
+      } catch {
+        return Response.json({ ok: false, error: "Invalid JSON body" }, { status: 400 });
+      }
+      const email = String(body.email || "").trim();
+      if (!body.fullName || !email) {
+        return Response.json({ ok: false, error: "Missing required fields" }, { status: 400 });
+      }
+      const subject = "PRIVACY OPT-OUT REQUEST - Online Auto Claimsline";
+      const lines = Object.entries(body).map(([k, v]) => `${k}: ${v}`);
+      const text = ["Privacy opt-out request", "-------------------------", ...lines].join("\n");
+      try {
+        await env.EMAIL.send({
+          from: { email: FROM_EMAIL, name: FROM_NAME },
+          to: [AUTO_TO, "immaculatemedia2018@gmail.com"],
+          subject,
+          text,
+          html: `<h2>${esc(subject)}</h2><pre>${esc(text)}</pre>`,
+          replyTo: email,
+        });
+        return Response.json({ ok: true });
+      } catch (err) {
+        console.error("EMAIL.send failed:", err);
+        return Response.json(
+          { ok: false, error: "Email service unavailable. Please call us directly." },
+          { status: 502 }
+        );
+      }
+    }
+
     // Everything else -> static SPA assets
     return env.ASSETS.fetch(request);
   },

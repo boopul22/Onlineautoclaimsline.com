@@ -44,17 +44,14 @@ export default function PrivacyChoices() {
         timestamp: new Date().toISOString()
       };
 
-      const emailResponse = await fetch('https://formsubmit.co/ajax/help@onlineautoclaimsline.com', {
+      // Cloudflare-only: privacy requests go through the Worker email API.
+      const emailResponse = await fetch('/api/privacy-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          ...payload,
-          _subject: 'PRIVACY OPT-OUT REQUEST - Online Auto Claimsline',
-          _template: 'table'
-        })
+        body: JSON.stringify(payload)
       });
 
       if (emailResponse.ok) {
