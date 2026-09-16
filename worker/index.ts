@@ -1,13 +1,16 @@
 /**
  * Online Auto Claimsline — Worker with Static Assets + Claim email API.
  *
- * POST /api/claim            -> help@onlineautoclaimsline.com  (existing site form)
+ * All form submissions go to admin@onlineautoclaimsline.com.
+ * The client has direct access to this inbox, so no fan-out/routing needed.
+ *
+ * POST /api/claim            -> admin@onlineautoclaimsline.com (site forms)
  * POST /api/commercial-claim -> admin@onlineautoclaimsline.com (commercial-insurance page)
+ * POST /api/privacy-request  -> admin@onlineautoclaimsline.com (privacy opt-outs)
  *
  * Uses Cloudflare Email Sending binding `EMAIL`.
  * Domain `onlineautoclaimsline.com` must be onboarded to Email Sending
  * (Dashboard: Compute & AI > Email Service > Email Sending > Onboard Domain).
- * Receiving already works via Email Routing catch-all -> bipul281b@gmail.com.
  */
 
 interface EmailBinding {
@@ -29,8 +32,8 @@ interface Env {
 
 const FROM_EMAIL = "claims@onlineautoclaimsline.com";
 const FROM_NAME = "Online Auto Claimsline";
-const AUTO_TO = "help@onlineautoclaimsline.com";
-const COMMERCIAL_TO = "admin@onlineautoclaimsline.com";
+// Single destination: the client monitors this inbox directly.
+const ADMIN_TO = "admin@onlineautoclaimsline.com";
 
 function esc(v: unknown): string {
   return String(v ?? "")
@@ -124,17 +127,14 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/api/commercial-claim") {
       return handleClaim(request, env, {
-        to: COMMERCIAL_TO,
+        to: ADMIN_TO,
         subjectPrefix: "New COMMERCIAL Claim Request",
       });
     }
 
     if (request.method === "POST" && url.pathname === "/api/claim") {
       return handleClaim(request, env, {
-        // Homepage form goes to BOTH: help@ (routes to Bipul) + Immaculate direct.
-        // Cloudflare Routing forward allows only one destination per rule,
-        // so fan-out happens here where multiple `to` recipients are supported.
-        to: [AUTO_TO, "immaculatemedia2018@gmail.com"],
+        to: ADMIN_TO,
         subjectPrefix: "New Claim Request",
       });
     }
@@ -156,7 +156,7 @@ export default {
       try {
         await env.EMAIL.send({
           from: { email: FROM_EMAIL, name: FROM_NAME },
-          to: [AUTO_TO, "immaculatemedia2018@gmail.com"],
+          to: ADMIN_TO,
           subject,
           text,
           html: `<h2>${esc(subject)}</h2><pre>${esc(text)}</pre>`,

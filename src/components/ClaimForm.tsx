@@ -81,9 +81,8 @@ export default function ClaimForm({
         ip_address: clientIp
       };
 
-      // Cloudflare-only: POST to the Worker email API (Email Sending + Routing).
-      // No third-party form services. The Worker fans mail out to the right inbox:
-      // homepage -> help@ (+ Immaculate), commercial -> admin@ (-> Immaculate).
+      // Cloudflare-only: POST to the Worker email API (Email Sending).
+      // No third-party form services. The Worker sends all submissions to admin@.
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
