@@ -172,7 +172,55 @@ export default {
       }
     }
 
-    // Everything else -> static SPA assets
-    return env.ASSETS.fetch(request);
+    // Everything else -> static SPA assets.
+    // NOTE: `assets.binding` must be set in wrangler.jsonc or env.ASSETS is
+    // undefined and every SPA route throws (Google Ads "Destination not
+    // working / HTTP 500", Cloudflare error 1101). The try/catch below keeps
+    // navigations on a working 200 (index.html) instead of a 500.
+    try {
+      const assetRes = await env.ASSETS.fetch(request);
+      // If the asset pipeline 404s a navigation (direct load / bot crawl of
+      // an SPA route), explicitly serve index.html so the React Router page
+      // boots instead of returning 404.
+      if (
+        assetRes.status === 404 &&
+        request.method === "GET" &&
+        (request.headers.get("accept") || "").includes("text/html")
+      ) {
+        const url = new URL(request.url);
+        url.pathname = "/index.html";
+        const fallback = await env.ASSETS.fetch(new Request(url.toString(), request));
+        if (fallback.status === 200) {
+          return new Response(fallback.body, {
+            status: 200,
+            headers: { ...Object.fromEntries(fallback.headers), "content-type": "text/html; charset=utf-8" },
+          });
+        }
+      }
+      return assetRes;
+    } catch (err) {
+      console.error("ASSETS.fetch failed, serving index.html fallback:", err);
+      try {
+        const url = new URL(request.url);
+        // Only fallback navigations / HTML requests; API + asset misses pass through.
+        if (request.method === "GET" && (request.headers.get("accept") || "").includes("text/html")) {
+          url.pathname = "/index.html";
+          const fallback = await env.ASSETS.fetch(new Request(url.toString(), request));
+          if (fallback.ok) {
+            return new Response(fallback.body, {
+              status: 200,
+              headers: { ...Object.fromEntries(fallback.headers), "content-type": "text/html; charset=utf-8" },
+            });
+          }
+        }
+      } catch (fallbackErr) {
+        console.error("index.html fallback also failed:", fallbackErr);
+      }
+      // Never leave bots (Google Ads) with a 500: serve a minimal working page.
+      return new Response(
+        "<!doctype html><html><head><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0;url=/\"></head><body><a href=\"/\">Continue</a></body></html>",
+        { status: 200, headers: { "content-type": "text/html; charset=utf-8" } }
+      );
+    }
   },
 };

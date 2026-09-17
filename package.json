@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && for r in commercial-insurance terms-and-conditions privacy-policy your-privacy-choices wa-health-policy partners-and-sponsors resources; do mkdir -p dist/$r && cp dist/index.html dist/$r/index.html && cp dist/index.html dist/$r.html; done",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
