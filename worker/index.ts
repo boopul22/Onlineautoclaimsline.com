@@ -1,12 +1,14 @@
 /**
  * Online Auto Claimsline — Worker with Static Assets + Claim email API.
  *
- * All form submissions go to admin@onlineautoclaimsline.com.
- * The client has direct access to this inbox, so no fan-out/routing needed.
+ * All form submissions go to the client's inbox (admin@onlineautoclaimline.com).
+ * Cloudflare Email Sending only delivers to verified destination addresses, so
+ * if the primary address is not yet verified, the send falls back to a
+ * known-verified inbox (immaculatemedia2018@gmail.com) so no lead is lost.
  *
- * POST /api/claim            -> admin@onlineautoclaimsline.com (site forms)
- * POST /api/commercial-claim -> admin@onlineautoclaimsline.com (commercial-insurance page)
- * POST /api/privacy-request  -> admin@onlineautoclaimsline.com (privacy opt-outs)
+ * POST /api/claim            -> client inbox (site forms)
+ * POST /api/commercial-claim -> client inbox (commercial-insurance page)
+ * POST /api/privacy-request  -> client inbox (privacy opt-outs)
  *
  * Uses Cloudflare Email Sending binding `EMAIL`.
  * Domain `onlineautoclaimsline.com` must be onboarded to Email Sending
@@ -32,8 +34,12 @@ interface Env {
 
 const FROM_EMAIL = "claims@onlineautoclaimsline.com";
 const FROM_NAME = "Online Auto Claimsline";
-// Single destination: the client monitors this inbox directly.
-const ADMIN_TO = "admin@onlineautoclaimsline.com";
+// Primary destination: the client's inbox.
+// Cloudflare Email Sending only delivers to VERIFIED destination addresses on
+// the account. Until the client's address is verified, every send falls back to
+// this known-verified inbox so no lead is ever lost.
+const ADMIN_TO = "admin@onlineautoclaimline.com";
+const FALLBACK_TO = "immaculatemedia2018@gmail.com";
 
 function esc(v: unknown): string {
   return String(v ?? "")
@@ -43,7 +49,31 @@ function esc(v: unknown): string {
     .replace(/"/g, "&quot;");
 }
 
-async function handleClaim(request: Request, env: Env, opts: { to: string | string[]; subjectPrefix: string }) {
+// Send to the primary destination, falling back to the verified inbox if the
+// primary is not yet a verified Cloudflare destination (or delivery fails).
+async function sendLead(
+  env: Env,
+  to: string,
+  message: { subject: string; text: string; html: string; replyTo?: string }
+): Promise<boolean> {
+  const base = { from: { email: FROM_EMAIL, name: FROM_NAME }, ...message };
+  try {
+    await env.EMAIL.send({ ...base, to });
+    return true;
+  } catch (err) {
+    console.error(`EMAIL.send to ${to} failed:`, err);
+    if (to === FALLBACK_TO) return false;
+    try {
+      await env.EMAIL.send({ ...base, to: FALLBACK_TO });
+      return true;
+    } catch (fallbackErr) {
+      console.error("EMAIL.send fallback failed:", fallbackErr);
+      return false;
+    }
+  }
+}
+
+async function handleClaim(request: Request, env: Env, opts: { to: string; subjectPrefix: string }) {
   let body: Record<string, unknown>;
   try {
     body = (await request.json()) as Record<string, unknown>;
@@ -102,23 +132,12 @@ async function handleClaim(request: Request, env: Env, opts: { to: string | stri
       <tr><td><strong>Timestamp</strong></td><td>${esc(body.timestamp || new Date().toISOString())}</td></tr>
     </table>`;
 
-  try {
-    await env.EMAIL.send({
-      from: { email: FROM_EMAIL, name: FROM_NAME },
-      to: opts.to,
-      subject,
-      text,
-      html,
-      replyTo: email,
-    });
-    return Response.json({ ok: true });
-  } catch (err) {
-    console.error("EMAIL.send failed:", err);
-    return Response.json(
-      { ok: false, error: "Email service unavailable. Please call us directly." },
-      { status: 502 }
-    );
-  }
+  const sent = await sendLead(env, opts.to, { subject, text, html, replyTo: email });
+  if (sent) return Response.json({ ok: true });
+  return Response.json(
+    { ok: false, error: "Email service unavailable. Please call us directly." },
+    { status: 502 }
+  );
 }
 
 export default {
@@ -153,23 +172,17 @@ export default {
       const subject = "PRIVACY OPT-OUT REQUEST - Online Auto Claimsline";
       const lines = Object.entries(body).map(([k, v]) => `${k}: ${v}`);
       const text = ["Privacy opt-out request", "-------------------------", ...lines].join("\n");
-      try {
-        await env.EMAIL.send({
-          from: { email: FROM_EMAIL, name: FROM_NAME },
-          to: ADMIN_TO,
-          subject,
-          text,
-          html: `<h2>${esc(subject)}</h2><pre>${esc(text)}</pre>`,
-          replyTo: email,
-        });
-        return Response.json({ ok: true });
-      } catch (err) {
-        console.error("EMAIL.send failed:", err);
-        return Response.json(
-          { ok: false, error: "Email service unavailable. Please call us directly." },
-          { status: 502 }
-        );
-      }
+      const sent = await sendLead(env, ADMIN_TO, {
+        subject,
+        text,
+        html: `<h2>${esc(subject)}</h2><pre>${esc(text)}</pre>`,
+        replyTo: email,
+      });
+      if (sent) return Response.json({ ok: true });
+      return Response.json(
+        { ok: false, error: "Email service unavailable. Please call us directly." },
+        { status: 502 }
+      );
     }
 
     // Everything else -> static SPA assets.
