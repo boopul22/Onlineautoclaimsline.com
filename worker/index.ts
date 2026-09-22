@@ -2,9 +2,8 @@
  * Online Auto Claimsline — Worker with Static Assets + Claim email API.
  *
  * All form submissions go to the client's inbox (admin@onlineautoclaimline.com).
- * Cloudflare Email Sending only delivers to verified destination addresses, so
- * if the primary address is not yet verified, the send falls back to a
- * known-verified inbox (immaculatemedia2018@gmail.com) so no lead is lost.
+ * Cloudflare Email Sending only delivers to VERIFIED destination addresses, so
+ * that address must be verified on the Cloudflare account or sends will fail.
  *
  * POST /api/claim            -> client inbox (site forms)
  * POST /api/commercial-claim -> client inbox (commercial-insurance page)
@@ -34,12 +33,10 @@ interface Env {
 
 const FROM_EMAIL = "claims@onlineautoclaimsline.com";
 const FROM_NAME = "Online Auto Claimsline";
-// Primary destination: the client's inbox.
+// Destination: the client's inbox.
 // Cloudflare Email Sending only delivers to VERIFIED destination addresses on
-// the account. Until the client's address is verified, every send falls back to
-// this known-verified inbox so no lead is ever lost.
+// the account, so this address must be verified or sends will fail.
 const ADMIN_TO = "admin@onlineautoclaimline.com";
-const FALLBACK_TO = "immaculatemedia2018@gmail.com";
 
 function esc(v: unknown): string {
   return String(v ?? "")
@@ -49,27 +46,17 @@ function esc(v: unknown): string {
     .replace(/"/g, "&quot;");
 }
 
-// Send to the primary destination, falling back to the verified inbox if the
-// primary is not yet a verified Cloudflare destination (or delivery fails).
 async function sendLead(
   env: Env,
   to: string,
   message: { subject: string; text: string; html: string; replyTo?: string }
 ): Promise<boolean> {
-  const base = { from: { email: FROM_EMAIL, name: FROM_NAME }, ...message };
   try {
-    await env.EMAIL.send({ ...base, to });
+    await env.EMAIL.send({ from: { email: FROM_EMAIL, name: FROM_NAME }, to, ...message });
     return true;
   } catch (err) {
     console.error(`EMAIL.send to ${to} failed:`, err);
-    if (to === FALLBACK_TO) return false;
-    try {
-      await env.EMAIL.send({ ...base, to: FALLBACK_TO });
-      return true;
-    } catch (fallbackErr) {
-      console.error("EMAIL.send fallback failed:", fallbackErr);
-      return false;
-    }
+    return false;
   }
 }
 
