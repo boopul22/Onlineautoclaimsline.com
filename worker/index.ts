@@ -73,6 +73,13 @@ async function handleClaim(request: Request, env: Env, opts: { to: string; subje
   const email = String(body.email || "").trim();
   const state = String(body.state || "").trim();
   const message = String(body.message || "").trim();
+  const claimType = String(body.claim_type || "").trim();
+  const accidentDate = String(body.accident_date || "").trim();
+  const faultStatus = String(body.fault_status || "").trim();
+  const otherDriverName = String(body.other_driver_name || "").trim();
+  const otherDriverInsurance = String(body.other_driver_insurance || "").trim();
+  const injuredParties = String(body.injured_parties || "").trim();
+  const passengerCount = String(body.passenger_count || "").trim();
 
   if (!name || !phone || !email || !state) {
     return Response.json({ ok: false, error: "Missing required fields (name, phone, email, state)" }, { status: 400 });
@@ -86,11 +93,23 @@ async function handleClaim(request: Request, env: Env, opts: { to: string; subje
   const text = [
     `${opts.subjectPrefix}`,
     `-----------------------------`,
+    `CONTACT DETAILS`,
     `Name: ${name}`,
-    `Phone: ${phone}`,
     `Email: ${email}`,
+    `Phone: ${phone}`,
+    ``,
+    `ACCIDENT INFORMATION`,
+    `Claim type: ${claimType || "-"}`,
+    `Accident date: ${accidentDate || "-"}`,
+    `Fault: ${faultStatus || "-"}`,
+    `What happened: ${message || "-"}`,
+    ``,
+    `OTHER DRIVER'S INFORMATION`,
+    `Other driver name: ${otherDriverName || "-"}`,
+    `Insurance company: ${otherDriverInsurance || "-"}`,
     `State: ${state}`,
-    `Message: ${message || "-"}`,
+    `Injured parties: ${injuredParties || "-"}`,
+    `Passengers: ${passengerCount || "-"}`,
     ``,
     `Consent group: ${body.consent_group || "-"}`,
     `TCPA consent: ${body.tcpa_consent || "-"}`,
@@ -105,11 +124,21 @@ async function handleClaim(request: Request, env: Env, opts: { to: string; subje
   const html = `
     <h2>${esc(opts.subjectPrefix)}</h2>
     <table cellpadding="6" cellspacing="0" border="1" style="border-collapse:collapse">
+      <tr><td colspan="2"><strong>Contact details</strong></td></tr>
       <tr><td><strong>Name</strong></td><td>${esc(name)}</td></tr>
-      <tr><td><strong>Phone</strong></td><td>${esc(phone)}</td></tr>
       <tr><td><strong>Email</strong></td><td>${esc(email)}</td></tr>
+      <tr><td><strong>Phone</strong></td><td>${esc(phone)}</td></tr>
+      <tr><td colspan="2"><strong>Accident information</strong></td></tr>
+      <tr><td><strong>Claim type</strong></td><td>${esc(claimType || "-")}</td></tr>
+      <tr><td><strong>Accident date</strong></td><td>${esc(accidentDate || "-")}</td></tr>
+      <tr><td><strong>Fault</strong></td><td>${esc(faultStatus || "-")}</td></tr>
+      <tr><td><strong>What happened</strong></td><td>${esc(message || "-")}</td></tr>
+      <tr><td colspan="2"><strong>Other driver's information</strong></td></tr>
+      <tr><td><strong>Other driver name</strong></td><td>${esc(otherDriverName || "-")}</td></tr>
+      <tr><td><strong>Insurance company</strong></td><td>${esc(otherDriverInsurance || "-")}</td></tr>
       <tr><td><strong>State</strong></td><td>${esc(state)}</td></tr>
-      <tr><td><strong>Message</strong></td><td>${esc(message || "-")}</td></tr>
+      <tr><td><strong>Injured parties</strong></td><td>${esc(injuredParties || "-")}</td></tr>
+      <tr><td><strong>Passengers</strong></td><td>${esc(passengerCount || "-")}</td></tr>
       <tr><td><strong>Consent group</strong></td><td>${esc(body.consent_group)}</td></tr>
       <tr><td><strong>TCPA consent</strong></td><td>${esc(body.tcpa_consent)}</td></tr>
       <tr><td><strong>Sensitive data consent</strong></td><td>${esc(body.sensitive_data_consent)}</td></tr>

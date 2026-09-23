@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, MessageSquare, User, Phone, Mail, ShieldCheck, Clock, CheckCircle, AlertCircle, Loader2, MapPin, Lock, Users } from 'lucide-react';
+import { ArrowRight, MessageSquare, User, Phone, Mail, ShieldCheck, Clock, CheckCircle, AlertCircle, Loader2, MapPin, Lock, Users, Calendar, Car, Building2, HeartPulse } from 'lucide-react';
 
 interface ClaimFormProps {
   /** Worker API endpoint. Defaults to /api/claim (auto). Commercial page uses /api/commercial-claim. */
@@ -14,6 +14,35 @@ interface ClaimFormProps {
   sectionId?: string;
 }
 
+const INITIAL_FORM = {
+  name: '',
+  email: '',
+  phone: '',
+  claim_type: '',
+  accident_date: '',
+  fault_status: '',
+  message: '',
+  other_driver_name: '',
+  other_driver_insurance: '',
+  state: '',
+  injured_parties: '',
+  passenger_count: ''
+};
+
+const inputClass =
+  'block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400';
+const selectClass =
+  'block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 appearance-none';
+
+function SectionHeading({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div className="flex items-center gap-2 pb-1 border-b border-gray-100">
+      <span className="text-[#1A3C6E]">{icon}</span>
+      <h4 className="text-xs font-bold text-[#1A3C6E] uppercase tracking-wider">{label}</h4>
+    </div>
+  );
+}
+
 export default function ClaimForm({
   endpoint = '/api/claim',
   source = 'homepage-auto',
@@ -22,13 +51,7 @@ export default function ClaimForm({
   submitLabel = 'Submit For Free Review',
   sectionId = 'claim',
 }: ClaimFormProps = {}) {
-  const [formState, setFormState] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    state: '',
-    message: ''
-  });
+  const [formState, setFormState] = useState({ ...INITIAL_FORM });
 
   const [consentState, setConsentState] = useState({
     mainConsent: false,
@@ -96,7 +119,7 @@ export default function ClaimForm({
 
       if (anySuccess) {
         setSubmitStatus('success');
-        setFormState({ name: '', phone: '', email: '', state: '', message: '' });
+        setFormState({ ...INITIAL_FORM });
         setConsentState({ mainConsent: false, sensitiveDataConsent: false, waHealthConsent: false });
       } else {
         setSubmitStatus('error');
@@ -111,6 +134,14 @@ export default function ClaimForm({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 8);
+    let formatted = digits;
+    if (digits.length > 4) formatted = `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+    else if (digits.length > 2) formatted = `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    setFormState(prev => ({ ...prev, accident_date: formatted }));
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -221,9 +252,11 @@ export default function ClaimForm({
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* ===== Contact Details ===== */}
               <div className="space-y-4">
-                {/* Name */}
+                <SectionHeading icon={<User className="h-4 w-4" />} label="Contact Details" />
+
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <User className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
@@ -233,7 +266,7 @@ export default function ClaimForm({
                     name="name"
                     id="name"
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400"
+                    className={inputClass}
                     placeholder="Your Name"
                     value={formState.name}
                     onChange={handleChange}
@@ -241,23 +274,6 @@ export default function ClaimForm({
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Phone */}
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
-                    </div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      id="phone"
-                      required
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400"
-                      placeholder="Phone Number"
-                      value={formState.phone}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  {/* Email */}
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
@@ -267,15 +283,144 @@ export default function ClaimForm({
                       name="email"
                       id="email"
                       required
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400"
-                      placeholder="E-mail"
+                      className={inputClass}
+                      placeholder="Email Address"
                       value={formState.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <input
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      required
+                      className={inputClass}
+                      placeholder="Phone Number"
+                      value={formState.phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* ===== Accident Information ===== */}
+              <div className="space-y-4">
+                <SectionHeading icon={<Car className="h-4 w-4" />} label="Accident Information" />
+
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Car className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                  </div>
+                  <select
+                    name="claim_type"
+                    id="claim_type"
+                    required
+                    className={selectClass}
+                    value={formState.claim_type}
+                    onChange={handleChange}
+                  >
+                    <option value="" disabled>Claim Type</option>
+                    <option value="Commercial Auto">Commercial Auto</option>
+                    <option value="Personal Auto">Personal Auto</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Calendar className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <input
+                      type="text"
+                      name="accident_date"
+                      id="accident_date"
+                      required
+                      inputMode="numeric"
+                      maxLength={10}
+                      pattern="\d{2}/\d{2}/\d{4}"
+                      title="Enter the date as MM/DD/YYYY"
+                      className={inputClass}
+                      placeholder="Accident Date (MM/DD/YYYY)"
+                      value={formState.accident_date}
+                      onChange={handleDateChange}
+                    />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <AlertCircle className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <select
+                      name="fault_status"
+                      id="fault_status"
+                      required
+                      className={selectClass}
+                      value={formState.fault_status}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>Fault / Not At Fault</option>
+                      <option value="At Fault">At Fault</option>
+                      <option value="Not At Fault">Not At Fault</option>
+                      <option value="Unsure">Unsure</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="relative group">
+                  <div className="absolute top-3 left-0 pl-3 pointer-events-none">
+                    <MessageSquare className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                  </div>
+                  <textarea
+                    name="message"
+                    id="message"
+                    rows={3}
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400 resize-none"
+                    placeholder="What happened in the accident?"
+                    value={formState.message}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+              </div>
+
+              {/* ===== Other Driver's Information ===== */}
+              <div className="space-y-4">
+                <SectionHeading icon={<Building2 className="h-4 w-4" />} label="Other Driver's Information" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <input
+                      type="text"
+                      name="other_driver_name"
+                      id="other_driver_name"
+                      className={inputClass}
+                      placeholder="Other Driver's Name"
+                      value={formState.other_driver_name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Building2 className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <input
+                      type="text"
+                      name="other_driver_insurance"
+                      id="other_driver_insurance"
+                      className={inputClass}
+                      placeholder="Insurance Company"
+                      value={formState.other_driver_insurance}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
 
-                {/* State */}
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <MapPin className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
@@ -284,7 +429,7 @@ export default function ClaimForm({
                     name="state"
                     id="state"
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 appearance-none"
+                    className={selectClass}
                     value={formState.state}
                     onChange={handleChange}
                   >
@@ -295,20 +440,42 @@ export default function ClaimForm({
                   </select>
                 </div>
 
-                {/* Message */}
-                <div className="relative group">
-                  <div className="absolute top-3 left-0 pl-3 pointer-events-none">
-                    <MessageSquare className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <HeartPulse className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <select
+                      name="injured_parties"
+                      id="injured_parties"
+                      required
+                      className={selectClass}
+                      value={formState.injured_parties}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>Injured Parties</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
                   </div>
-                  <textarea
-                    name="message"
-                    id="message"
-                    rows={3}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1A3C6E] focus:border-transparent transition-all outline-none bg-gray-50 focus:bg-white text-gray-900 placeholder-gray-400 resize-none"
-                    placeholder="Briefly describe what happened..."
-                    value={formState.message}
-                    onChange={handleChange}
-                  ></textarea>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Users className="h-5 w-5 text-gray-400 group-focus-within:text-[#1A3C6E] transition-colors" />
+                    </div>
+                    <select
+                      name="passenger_count"
+                      id="passenger_count"
+                      className={selectClass}
+                      value={formState.passenger_count}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>Passengers</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4+">4+</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
