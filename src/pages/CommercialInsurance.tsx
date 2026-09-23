@@ -15,6 +15,17 @@ export default function CommercialInsurance() {
         'File your commercial vehicle insurance claim. Trucks, fleets, vans & commercial autos — free review, serving all of USA. Call 888 237 0877.'
       );
     }
+    if (window.location.hash) {
+      try {
+        const el = document.querySelector(window.location.hash);
+        if (el) {
+          el.scrollIntoView();
+          return;
+        }
+      } catch {
+        // Ignore malformed hash and fall through to top.
+      }
+    }
     window.scrollTo(0, 0);
   }, []);
 
@@ -40,7 +51,7 @@ export default function CommercialInsurance() {
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <a
-                  href="#commercial-claim"
+                  href="#commercial-claim-form"
                   className="inline-flex justify-center items-center gap-2 bg-[#1A3C6E] text-white px-6 py-3.5 rounded-full text-base font-medium hover:bg-slate-800 transition-all shadow-md shadow-[#1A3C6E]/10"
                 >
                   File Commercial Claim <ArrowRight className="w-5 h-5" />

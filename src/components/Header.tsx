@@ -15,7 +15,7 @@ export default function Header() {
   const isCommercial = location.pathname.startsWith('/commercial-insurance');
   const phoneTel = isCommercial ? 'tel:8882370877' : 'tel:8889870834';
   const phoneDisplay = isCommercial ? '888 237 0877' : '888 987 0834';
-  const claimHref = isCommercial ? '/commercial-insurance#commercial-claim' : '/#claim';
+  const claimHref = isCommercial ? '/commercial-insurance#commercial-claim-form' : '/#claim';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);

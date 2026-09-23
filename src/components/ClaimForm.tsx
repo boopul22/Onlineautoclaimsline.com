@@ -169,7 +169,7 @@ export default function ClaimForm({
   ];
 
   return (
-    <section id={sectionId} className="relative bg-[#1A3C6E] overflow-hidden">
+    <section id={sectionId} className="relative bg-[#1A3C6E] overflow-hidden scroll-mt-20">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#4b5563 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
@@ -227,7 +227,7 @@ export default function ClaimForm({
 
         {/* Right Form Panel */}
         <div className="w-full lg:w-7/12 bg-gray-50 flex flex-col justify-center p-4 py-12 lg:p-20 xl:p-24">
-          <div className="bg-white p-6 md:p-10 rounded-2xl shadow-2xl shadow-blue-900/10 border border-gray-100 max-w-xl mx-auto w-full relative">
+          <div id={`${sectionId}-form`} className="bg-white p-6 md:p-10 rounded-2xl shadow-2xl shadow-blue-900/10 border border-gray-100 max-w-xl mx-auto w-full relative scroll-mt-20">
             {/* Decorative accent */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#1A3C6E] to-[#FF6B35] rounded-t-2xl"></div>
 
