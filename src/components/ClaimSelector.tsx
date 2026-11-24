@@ -67,10 +67,7 @@ export default function ClaimSelector() {
           ))}
         </div>
 
-        <p className="mt-6 border-t border-slate-200 pt-5 text-xs leading-relaxed text-slate-500">
-          Independent accident claims assistance. We are not your insurance provider.
-        </p>
-        <button type="button" onClick={close} className="mt-2 py-2 text-sm text-slate-500 underline hover:text-[#1A3C6E] cursor-pointer">
+        <button type="button" onClick={close} className="mt-4 py-2 text-sm text-slate-500 underline hover:text-[#1A3C6E] cursor-pointer">
           Continue to website
         </button>
       </div>
