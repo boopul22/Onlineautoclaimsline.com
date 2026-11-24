@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react';
 import { ChevronRight, ClipboardList, FilePlus2, Headset } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
-const SEEN_KEY = 'claimSelectorSeen';
-
 export default function ClaimSelector() {
   const { pathname } = useLocation();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const shownRef = useRef(false);
   const isCommercial = pathname.startsWith('/commercial-insurance');
   const isLandingPage = pathname === '/' || isCommercial;
+  const phoneTel = isCommercial ? 'tel:8882370877' : 'tel:8889870834';
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -17,21 +17,16 @@ export default function ClaimSelector() {
       dialog.close();
       return;
     }
-    // A #hash link already says where the visitor wants to go.
-    if (window.location.hash || dialog.open) return;
-    try {
-      if (sessionStorage.getItem(SEEN_KEY)) return;
-      sessionStorage.setItem(SEEN_KEY, '1');
-    } catch {
-      // Storage blocked: still show the selector.
-    }
+    // Once per page load, so a refresh shows it again.
+    if (shownRef.current) return;
+    shownRef.current = true;
     dialog.showModal();
   }, [isLandingPage]);
 
   const close = () => dialogRef.current?.close();
 
   const options = [
-    { title: 'Start a New Claim', subtitle: 'File a new Auto Claim', href: isCommercial ? '#commercial-claim-form' : '#claim-form', Icon: FilePlus2, primary: true },
+    { title: 'Start a New Claim', subtitle: 'File a new Auto Claim', href: phoneTel, Icon: FilePlus2, primary: true },
     { title: 'Existing Claim', subtitle: 'Get help with an ongoing claim', href: '#contact-us', Icon: ClipboardList, primary: false },
     { title: 'Other Inquiries', subtitle: 'General questions and assistance', href: '#contact-us', Icon: Headset, primary: false },
   ];
