@@ -9,6 +9,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 1rem);
 }

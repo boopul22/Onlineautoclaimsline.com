@@ -3,6 +3,7 @@ import EmergencyBar from './components/EmergencyBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileStickyCta from './components/MobileStickyCta';
+import ClaimSelector from './components/ClaimSelector';
 import Home from './pages/Home';
 import CommercialInsurance from './pages/CommercialInsurance';
 import Terms from './pages/Terms';
@@ -29,6 +30,7 @@ export default function App() {
       </Routes>
       <Footer />
       <MobileStickyCta />
+      <ClaimSelector />
     </div>
   );
 }

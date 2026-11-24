@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div id="contact-us" className="scroll-mt-20">
             <h4 className="text-white font-bold text-lg mb-6">Contact Us</h4>
             <ul className="space-y-6">
               <li className="flex items-start gap-4 group">
